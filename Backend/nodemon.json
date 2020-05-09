@@ -2,7 +2,7 @@
   "restartable": "rs",
   "ignore": [".git", "node_modules/**/node_modules"],
   "verbose": false,
-  "watch": ["server"],
+  "watch": ["src"],
   "ext": "ts",
   "execMap": {
     "ts": "npx ts-node -p"

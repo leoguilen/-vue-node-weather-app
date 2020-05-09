@@ -8,13 +8,13 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "sourceMap": true,
-    "outDir": "./server/dist",
-    "rootDir": "./server",
+    "outDir": "./dist",
+    "rootDir": "./src",
     "baseUrl": ".",
     "paths": {
-      "*": ["node_modules/", "server/types/*"]
+      "*": ["node_modules/", "src/types/*"]
     }
   },
-  "include": ["server/**/*"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }
