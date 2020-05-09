@@ -1,0 +1,14 @@
+{
+  "restartable": "rs",
+  "ignore": [".git", "node_modules/**/node_modules"],
+  "verbose": false,
+  "watch": ["server"],
+  "ext": "ts",
+  "execMap": {
+    "ts": "npx ts-node -p"
+  },
+  "env": {
+    "NODE_ENV": "Development",
+    "PORT": "4545"
+  }
+}
