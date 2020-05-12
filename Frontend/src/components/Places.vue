@@ -12,7 +12,7 @@
                     >Informações Climáticas</v-list-item-title
                   >
                   <!-- Combo com os estados -->
-                  <v-card-text>
+                  <v-card-text v-if="enableCbox === true ? '' : 'display:none'">
                     <v-combobox
                       v-model="stateObj"
                       v-on:change="showCities(stateObj)"
@@ -25,8 +25,8 @@
 
                     <!-- Combo com as cidades -->
                     <v-combobox
-                      v-model="selectedCities"
-                      v-on:change="showCities(`${selectedCities}`)"
+                      v-model="cityObj"
+                      v-on:change="cityInfo(cityObj)"
                       :items="cities"
                       hide-selected
                       label="Selecione as cidades desejadas"
@@ -38,7 +38,7 @@
                     ></v-combobox>
 
                     <!-- Checklist com os lugares selecionados -->
-                    <v-list shaped>
+                    <v-list flat>
                       <v-list-item-group color="primary">
                         <v-list-item
                           v-for="(item, i) in selectedPlaces"
@@ -47,8 +47,14 @@
                           <v-list-item-content>
                             <v-list-item-title
                               >{{ item.state }} -
-                              {{ item.city }}</v-list-item-title
-                            >
+                              {{ item.city }}
+
+                              <a href="#" @click="removeItem(item)">
+                                <img
+                                  style="float:right;margin-top:3px"
+                                  src="../assets/Icons/close.svg"
+                              /></a>
+                            </v-list-item-title>
                           </v-list-item-content>
                         </v-list-item>
                       </v-list-item-group>
@@ -57,7 +63,12 @@
                     <!-- Botão para envio das cidades selecionadas -->
                     <v-divider></v-divider>
                     <v-card-actions style="float:right; margin-right: -4px">
-                      <v-btn small color="primary">Enviar</v-btn>
+                      <v-btn
+                        small
+                        color="primary"
+                        @click="sendPlaces(selectedPlaces)"
+                        >Enviar</v-btn
+                      >
                     </v-card-actions>
                   </v-card-text>
                 </v-list-item-content>
@@ -73,35 +84,74 @@
 <script>
 import StateService from "../services/statesService.js";
 import CityService from "../services/citiesService.js";
+import { isNullOrUndefined } from "util";
 
 export default {
   name: "Places",
   data: () => {
     return {
-      disableCities: false,
+      disableCities: true,
       states: [],
+      stateSaved: null,
       stateObj: "",
       cities: [],
-      selectedCities: [],
+      cityObj: [],
       selectedPlaces: [],
+      error: "",
+      loader: false,
+      enableCbox: false,
     };
   },
   async created() {
-    const states = await StateService.getAll();
-    states.forEach((state) =>
-      this.states.push({ text: state.stateName, value: state.geoId })
-    );
+    try {
+      const states = await StateService.getAll();
+      states.forEach((state) =>
+        this.states.push({ text: state.stateName, value: state.geoId })
+      );
+    } catch (error) {
+      this.error = error;
+    }
   },
   methods: {
-    showCities: (state) => {
-      const cities = CityService.getCitiesByState(state.value).then((res) => {
-        return res;
-      });
+    showCities: async function(state) {
+      if (isNullOrUndefined(state)) {
+        this.disableCities = true;
+        this.cities = [];
+        this.cityObj = "";
+        return;
+      } else {
+        if (!isNullOrUndefined(this.stateSaved))
+          if (state.text !== this.stateSaved) {
+            this.cities = [];
+            this.cityObj = "";
+          }
+      }
 
-      // cities.forEach((city) =>
-      //   this.cities.push({ text: city.cityName, value: city.geoId })
-      // );
-      console.log(cities);
+      this.stateSaved = state.text;
+      this.disableCities = false;
+
+      try {
+        const cities = await CityService.getCitiesByState(state.value);
+        cities.forEach((city) =>
+          this.cities.push({ text: city.cityName, value: city.geoId })
+        );
+      } catch (error) {
+        this.error = error;
+      }
+    },
+    cityInfo: function(cities) {
+      this.selectedPlaces.push({
+        state: this.stateObj.text,
+        city: cities[cities.length - 1].text,
+      });
+    },
+    removeItem: function(itemCity) {
+      let indexCity = this.selectedPlaces.indexOf(itemCity);
+      this.selectedPlaces.splice(indexCity, 1);
+      this.cityObj.splice(indexCity, 1);
+    },
+    sendPlaces: function(places) {
+      console.log(places);
     },
   },
 };
