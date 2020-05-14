@@ -14,7 +14,7 @@ class CityService {
 
             return response.data;
         } catch (error) {
-            return error;
+            return error.message;
         }
     }
 }

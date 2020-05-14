@@ -1,18 +1,22 @@
 <template>
   <main>
     <v-container fluid>
+      <v-alert transition="slide-y-reverse-transition" v-show="error !== ''" type="error">{{error}}</v-alert>
       <v-row>
         <v-col cols="12">
           <v-row align="center" justify="center">
             <v-card class="ma-3 pa-6" max-width="400">
+              <v-alert
+                transition="slide-y-reverse-transition"
+                v-show="alert !== ''"
+                type="warning"
+              >{{alert}}</v-alert>
               <!-- Card central com os inputs-->
               <v-list-item two-line>
-                <v-list-item-content>
-                  <v-list-item-title class="headline text-center"
-                    >Informações Climáticas</v-list-item-title
-                  >
+                <v-list-item-content v-show="enableCbox === true">
+                  <v-list-item-title class="headline text-center">Informações Climáticas</v-list-item-title>
                   <!-- Combo com os estados -->
-                  <v-card-text v-if="enableCbox === true ? '' : 'display:none'">
+                  <v-card-text>
                     <v-combobox
                       v-model="stateObj"
                       v-on:change="showCities(stateObj)"
@@ -40,20 +44,20 @@
                     <!-- Checklist com os lugares selecionados -->
                     <v-list flat>
                       <v-list-item-group color="primary">
-                        <v-list-item
-                          v-for="(item, i) in selectedPlaces"
-                          :key="i"
-                        >
+                        <v-list-item v-for="(item, i) in selectedPlaces" :key="i">
                           <v-list-item-content>
-                            <v-list-item-title
-                              >{{ item.state }} -
+                            <v-list-item-title>
+                              {{ item.state }} -
                               {{ item.city }}
-
-                              <a href="#" @click="removeItem(item)">
+                              <a
+                                href="#"
+                                @click="removeItem(item)"
+                              >
                                 <img
                                   style="float:right;margin-top:3px"
                                   src="../assets/Icons/close.svg"
-                              /></a>
+                                />
+                              </a>
                             </v-list-item-title>
                           </v-list-item-content>
                         </v-list-item>
@@ -63,12 +67,7 @@
                     <!-- Botão para envio das cidades selecionadas -->
                     <v-divider></v-divider>
                     <v-card-actions style="float:right; margin-right: -4px">
-                      <v-btn
-                        small
-                        color="primary"
-                        @click="sendPlaces(selectedPlaces)"
-                        >Enviar</v-btn
-                      >
+                      <v-btn small color="primary" @click="sendPlaces(selectedPlaces)">Enviar</v-btn>
                     </v-card-actions>
                   </v-card-text>
                 </v-list-item-content>
@@ -98,14 +97,15 @@ export default {
       cityObj: [],
       selectedPlaces: [],
       error: "",
+      alert: "",
       loader: false,
-      enableCbox: false,
+      enableCbox: true
     };
   },
   async created() {
     try {
       const states = await StateService.getAll();
-      states.forEach((state) =>
+      states.forEach(state =>
         this.states.push({ text: state.stateName, value: state.geoId })
       );
     } catch (error) {
@@ -132,7 +132,7 @@ export default {
 
       try {
         const cities = await CityService.getCitiesByState(state.value);
-        cities.forEach((city) =>
+        cities.forEach(city =>
           this.cities.push({ text: city.cityName, value: city.geoId })
         );
       } catch (error) {
@@ -142,8 +142,10 @@ export default {
     cityInfo: function(cities) {
       this.selectedPlaces.push({
         state: this.stateObj.text,
-        city: cities[cities.length - 1].text,
+        city: cities[cities.length - 1].text
       });
+
+      this.alert = "";
     },
     removeItem: function(itemCity) {
       let indexCity = this.selectedPlaces.indexOf(itemCity);
@@ -151,8 +153,11 @@ export default {
       this.cityObj.splice(indexCity, 1);
     },
     sendPlaces: function(places) {
+      if (places.length === 0) this.alert = "Selecione cidades para continuar!";
+
+      //this.enableCbox = false;
       console.log(places);
-    },
-  },
+    }
+  }
 };
 </script>

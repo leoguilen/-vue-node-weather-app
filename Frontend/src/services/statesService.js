@@ -13,7 +13,7 @@ class StateService {
             })
             return response.data;
         } catch (error) {
-            return error;
+            throw error.message;
         }
     }
 }
