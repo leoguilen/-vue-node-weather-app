@@ -8,7 +8,7 @@
               <!-- Logo do projeto -->
               <div class="ma-3 pa-6">
                 <v-img
-                  src="../../assets/logo-nome-app.png"
+                  :src="require('@/assets/logo-nome-app.png')"
                   aspect-ratio="1.7"
                   height="400px"
                   width="300px"
@@ -22,16 +22,10 @@
 
               <!-- Botão para abrir repo do projeto -->
               <div class="ma-3 pa-6">
-                <v-btn
-                  class="ma-2 text-center"
-                  color="#FAFAFA"
-                  :href="projectSrc"
-                  target="_blank"
-                  ><strong style="color: #1B69C1; letter-spacing: 0.06em;"
-                    >Go to Code</strong
-                  >
+                <v-btn class="ma-2 text-center" color="#FAFAFA" :href="projectSrc" target="_blank">
+                  <strong style="color: #1B69C1; letter-spacing: 0.06em;">Go to Code</strong>
                   <img
-                    src="../../assets/Icons/github-blue.svg"
+                    :src="require('@/assets/Icons/github-blue.svg')"
                     height="25px"
                     width="25px"
                     style="margin-left:0.8em;margin-bottom:0.07em"
@@ -48,11 +42,11 @@
 
 <script>
 export default {
-  name: 'NavMenu',
+  name: "NavMenu",
   data: () => {
     return {
-      projectSrc: 'https://github.com/leoguilen/vue-node-weather-app',
+      projectSrc: "https://github.com/leoguilen/vue-node-weather-app"
     };
-  },
+  }
 };
 </script>

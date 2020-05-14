@@ -91,6 +91,7 @@
 <script>
 import StateService from "../services/statesService.js";
 import CityService from "../services/citiesService.js";
+import WeatherService from "../services/weatherService.js";
 import Results from "./Results.vue";
 import { isNullOrUndefined } from "util";
 
@@ -111,21 +112,9 @@ export default {
       error: "",
       alert: "",
       loader: false,
-      enableCbox: false,
-      results: true,
-      resultsObj: [
-        {
-          placeName: "Atibaia",
-          mainWeather: "Clouds",
-          descWeather: "overcast clouds",
-          temperature: 18.9,
-          thermalSensation: 19.74,
-          minTemp: 18,
-          maxTemp: 20,
-          pressure: 1017,
-          humidity: 82
-        }
-      ]
+      enableCbox: true,
+      results: false,
+      resultsObj: []
     };
   },
   async created() {
@@ -187,12 +176,31 @@ export default {
       this.enableCbox = false;
       this.loader = true;
 
+      try {
+        places.forEach(async pl => {
+          const res = await WeatherService.getInfo(pl.city);
+          this.resultsObj.push({
+            placeName: res.PlaceName,
+            mainWeather: res.MainWeather,
+            descWeather: res.DescriptionWeather,
+            temperature: res.Temperature,
+            thermalSensation: res.ThermalSensation,
+            minTemp: res.MinTemperature,
+            maxTemp: res.MaxTemperature,
+            pressure: res.Pressure,
+            humidity: res.Humidity
+          });
+        });
+      } catch (error) {
+        this.error = error;
+      }
+
+      console.log(this.resultsObj);
+
       setInterval(() => {
         this.loader = false;
         this.results = true;
       }, 2000);
-
-      console.log(places);
     }
   }
 };

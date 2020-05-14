@@ -4,14 +4,18 @@
       <v-list-item two-line>
         <v-list-item-content>
           <v-list-item-title class="headline">{{item.placeName}}</v-list-item-title>
-          <v-list-item-subtitle>Mon, 12:30 PM, {{item.descWeather}}</v-list-item-subtitle>
+          <v-list-item-subtitle>{{shortDate}}, {{item.descWeather}}</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
       <v-card-text>
         <v-row align="center">
           <v-col class="display-3" cols="7">{{Math.round(item.temperature)}}&deg;C</v-col>
           <v-col cols="5">
-            <v-img src="../assets/weather/Clouds.svg" alt="Sunny image" width="80"></v-img>
+            <v-img
+              :src="require(`@/assets/weather/${item.mainWeather}.svg`)"
+              alt="Sunny image"
+              width="80"
+            ></v-img>
           </v-col>
         </v-row>
       </v-card-text>
@@ -36,7 +40,11 @@
             <v-list-item-title>
               <v-row>
                 <v-col cols="5" style="margin-right: -20px">
-                  <v-img src="../assets/weather/humidity.svg" alt="Humidity image" width="35"></v-img>
+                  <v-img
+                    :src="require('@/assets/weather/humidity.svg')"
+                    alt="Humidity image"
+                    width="35"
+                  ></v-img>
                 </v-col>
                 <v-col cols="7">
                   Humidity
@@ -48,7 +56,11 @@
             <v-list-item-title>
               <v-row>
                 <v-col cols="5" style="margin-right: -20px">
-                  <v-img src="../assets/weather/pressure.svg" alt="Pressure image" width="35"></v-img>
+                  <v-img
+                    :src="require('@/assets/weather/pressure.svg')"
+                    alt="Pressure image"
+                    width="35"
+                  ></v-img>
                 </v-col>
                 <v-col cols="7">
                   Pressure
@@ -61,7 +73,7 @@
               <v-row>
                 <v-col cols="5" style="margin-right: -22px">
                   <v-img
-                    src="../assets/weather/thermo.svg"
+                    :src="require('@/assets/weather/thermo.svg')"
                     alt="Thermal sensation image"
                     width="35"
                   ></v-img>
@@ -82,6 +94,19 @@
 <script>
 export default {
   name: "Results",
-  props: ["results", "enable"]
+  props: ["results", "enable"],
+  date: () => {
+    return {
+      shortDate: ""
+    };
+  },
+  async created() {
+    const today = new Date();
+    this.shortDate = today.toLocaleDateString("en-US", {
+      weekday: "short",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+  }
 };
 </script>
