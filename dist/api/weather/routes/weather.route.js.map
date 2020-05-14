@@ -1,0 +1,1 @@
+{"version":3,"file":"weather.route.js","sourceRoot":"","sources":["../../../../src/api/weather/routes/weather.route.ts"],"names":[],"mappings":";;;;;AAAA,qCAAiC;AAEjC,2FAAkE;AAElE,MAAM,aAAa,GAAG,gBAAM,EAAE,CAAC;AAE/B,aAAa,CAAC,GAAG,CAAC,iBAAiB,EAAE,4BAAiB,CAAC,yBAAyB,CAAC,CAAC;AAElF,kBAAe,aAAa,CAAC"}

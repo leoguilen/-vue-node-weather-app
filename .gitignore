@@ -113,5 +113,5 @@ web_modules/
 .yarn/build-state.yml
 .pnp.*
 
-# dist directory
-dist
+#src directory
+src
