@@ -1,5 +1,5 @@
 <template>
-  <v-footer color="#212121" padless absolute>
+  <v-footer color="#212121" padless>
     <v-row justify="center" no-gutters>
       <!-- Logo do app -->
       <v-col class="py-3 text-center white--text" cols="2">

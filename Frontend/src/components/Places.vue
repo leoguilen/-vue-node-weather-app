@@ -1,11 +1,11 @@
 <template>
-  <main>
+  <main style="height:100%">
     <v-container fluid>
       <v-alert transition="slide-y-reverse-transition" v-show="error !== ''" type="error">{{error}}</v-alert>
       <v-row>
         <v-col cols="12">
           <v-row align="center" justify="center">
-            <v-card class="ma-3 pa-6" max-width="400">
+            <v-card class="ma-3 pa-6" max-width="400" height="100%">
               <v-alert
                 transition="slide-y-reverse-transition"
                 v-show="alert !== ''"
