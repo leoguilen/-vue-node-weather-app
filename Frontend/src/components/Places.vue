@@ -11,8 +11,8 @@
                 v-show="alert !== ''"
                 type="warning"
               >{{alert}}</v-alert>
-              <!-- Card central com os inputs-->
               <v-list-item two-line>
+                <!-- Card central com os inputs-->
                 <v-list-item-content v-show="enableCbox === true">
                   <v-list-item-title class="headline text-center">Informações Climáticas</v-list-item-title>
                   <!-- Combo com os estados -->
@@ -34,7 +34,6 @@
                       :items="cities"
                       hide-selected
                       label="Selecione as cidades desejadas"
-                      hint="Máximo de 5 cidades"
                       multiple
                       persistent-hint
                       small-chips
@@ -71,6 +70,15 @@
                     </v-card-actions>
                   </v-card-text>
                 </v-list-item-content>
+
+                <!-- Loader -->
+                <v-list-item-content v-show="loader === true">
+                  <v-img src="../assets/Icons/loader.gif" aspect-ratio="2" contain></v-img>
+                  <p>Carregando, por favor aguarde...</p>
+                </v-list-item-content>
+
+                <!-- Card com resultados climáticos -->
+                <Results :results="resultsObj" :enable="results" />
               </v-list-item>
             </v-card>
           </v-row>
@@ -83,10 +91,14 @@
 <script>
 import StateService from "../services/statesService.js";
 import CityService from "../services/citiesService.js";
+import Results from "./Results.vue";
 import { isNullOrUndefined } from "util";
 
 export default {
   name: "Places",
+  components: {
+    Results
+  },
   data: () => {
     return {
       disableCities: true,
@@ -99,7 +111,21 @@ export default {
       error: "",
       alert: "",
       loader: false,
-      enableCbox: true
+      enableCbox: false,
+      results: true,
+      resultsObj: [
+        {
+          placeName: "Atibaia",
+          mainWeather: "Clouds",
+          descWeather: "overcast clouds",
+          temperature: 18.9,
+          thermalSensation: 19.74,
+          minTemp: 18,
+          maxTemp: 20,
+          pressure: 1017,
+          humidity: 82
+        }
+      ]
     };
   },
   async created() {
@@ -153,9 +179,19 @@ export default {
       this.cityObj.splice(indexCity, 1);
     },
     sendPlaces: function(places) {
-      if (places.length === 0) this.alert = "Selecione cidades para continuar!";
+      if (places.length === 0) {
+        this.alert = "Selecione cidades para continuar!";
+        return;
+      }
 
-      //this.enableCbox = false;
+      this.enableCbox = false;
+      this.loader = true;
+
+      setInterval(() => {
+        this.loader = false;
+        this.results = true;
+      }, 2000);
+
       console.log(places);
     }
   }
