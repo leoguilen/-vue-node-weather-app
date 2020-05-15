@@ -20,11 +20,11 @@
   <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/leoguilen/vue-node-weather-app.svg">
 
 ​    <img alt="Repository size" src="https://img.shields.io/github/repo-size/leoguilen/vue-node-weather-app.svg">
-  <a href="https://github.com/lukemorales/rocketshoes-react-native/commits/master">
+  <a href="https://github.com/leoguilen/vue-node-weather-app/commits/master">
 ​    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/leoguilen/vue-node-weather-app.svg">
   </a>
 
-  <a href="https://github.com/lukemorales/rocketshoes-react-native/issues">
+  <a href="https://github.com/leoguilen/vue-node-weather-app/issues">
     <img alt="Repository issues" src="https://img.shields.io/github/issues/leoguilen/vue-node-weather-app.svg">
   </a>
 
@@ -37,7 +37,7 @@
 </p>
 
 <p align="center">
-  <img alt="Demo on Netlify" src="https://res.cloudinary.com/leoguilen/image/upload/v1589507828/Img_Readme/demonstracao_weather_app_pypqcb.gif">
+  <img alt="Demo on Netlify" src="https://res.cloudinary.com/leoguilen/image/upload/v1589512399/Img_Readme/demonstracao_weather_app1_nosi2s.gif">
 </p>
 
 ## :rocket: Technologies
