@@ -5,11 +5,13 @@
 </h1>
 
 <h4 align="center">
-  Weather Infos App with Node.js and Vue.js
+  Weather Infos App with Node.js and Vue.js<br/><br/>
+    This project is published in <img height="50" src="https://res.cloudinary.com/leoguilen/image/upload/v1589509035/Img_Readme/heroku_sceih7.png">and  <img height="35" src="https://res.cloudinary.com/leoguilen/image/upload/v1589509224/Img_Readme/ghpages_msx2pi.png"> <br/><br/>
+     **Link to application:** https://leoguilen.github.io/vue-node-weather-app/
 </h4>
-​									     This project is published in <img height="50" src="https://res.cloudinary.com/leoguilen/image/upload/v1589509035/Img_Readme/heroku_sceih7.png">and  <img height="35" src="https://res.cloudinary.com/leoguilen/image/upload/v1589509224/Img_Readme/ghpages_msx2pi.png">
+​									     
 
-​								 **Link to application:** https://leoguilen.github.io/vue-node-weather-app/
+​								
 
 
   <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/leoguilen/vue-node-weather-app.svg">			
