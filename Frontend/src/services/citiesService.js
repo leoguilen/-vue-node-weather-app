@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const urlBase = "http://localhost:4545/api/v1";
+const urlBase = process.env.VUE_APP_ROOT_API;
 
 class CityService {
     static async getCitiesByState(stateGeoId) {
