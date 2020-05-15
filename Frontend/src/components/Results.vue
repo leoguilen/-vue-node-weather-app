@@ -1,18 +1,30 @@
 <template>
   <v-list-item-content v-show="enable === true">
-    <v-carousel cycle height="400" :show-arrows="false" hide-delimiter-background light>
+    <v-carousel
+      cycle
+      height="400"
+      :show-arrows="false"
+      hide-delimiter-background
+      light
+    >
       <v-carousel-item v-for="item in results" :key="item">
         <v-sheet height="100%" color="white">
           <v-card class="mx-auto" max-width="400">
             <v-list-item two-line>
               <v-list-item-content>
-                <v-list-item-title class="headline">{{item.placeName}}</v-list-item-title>
-                <v-list-item-subtitle>{{shortDate}}, {{item.descWeather}}</v-list-item-subtitle>
+                <v-list-item-title class="headline">{{
+                  item.placeName
+                }}</v-list-item-title>
+                <v-list-item-subtitle
+                  >{{ shortDate }}, {{ item.descWeather }}</v-list-item-subtitle
+                >
               </v-list-item-content>
             </v-list-item>
             <v-card-text>
               <v-row align="center">
-                <v-col class="display-3" cols="7">{{Math.round(item.temperature)}}&deg;C</v-col>
+                <v-col class="display-3" cols="7"
+                  >{{ Math.round(item.temperature) }}&deg;C</v-col
+                >
                 <v-col cols="5">
                   <v-img
                     :src="require(`@/assets/weather/${item.mainWeather}.svg`)"
@@ -29,17 +41,17 @@
                   <v-list-item-title>
                     <p>
                       Max:
-                      <span
-                        style="font-size: 25px; margin-left: 3px"
-                      >{{Math.round(item.maxTemp)}}°</span>
+                      <span style="font-size: 25px; margin-left: 3px"
+                        >{{ Math.round(item.maxTemp) }}°</span
+                      >
                     </p>
                   </v-list-item-title>
                   <v-list-item-title>
                     <p>
                       Min:
-                      <span
-                        style="font-size: 25px; margin-left: 6px"
-                      >{{Math.round(item.minTemp)}}°</span>
+                      <span style="font-size: 25px; margin-left: 6px"
+                        >{{ Math.round(item.minTemp) }}°</span
+                      >
                     </p>
                   </v-list-item-title>
                 </v-col>
@@ -55,7 +67,7 @@
                       </v-col>
                       <v-col cols="7">
                         Humidity
-                        <h3>{{item.humidity}}%</h3>
+                        <h3>{{ item.humidity }}%</h3>
                       </v-col>
                     </v-row>
                   </v-list-item-title>
@@ -71,7 +83,7 @@
                       </v-col>
                       <v-col cols="7">
                         Pressure
-                        <h4>{{item.pressure}} hPa</h4>
+                        <h4>{{ item.pressure }} hPa</h4>
                       </v-col>
                     </v-row>
                   </v-list-item-title>
@@ -87,7 +99,7 @@
                       </v-col>
                       <v-col cols="8">
                         Thermal S.
-                        <h3>{{Math.round(item.thermalSensation)}}°</h3>
+                        <h3>{{ Math.round(item.thermalSensation) }}°</h3>
                       </v-col>
                     </v-row>
                   </v-list-item-title>
@@ -98,6 +110,9 @@
         </v-sheet>
       </v-carousel-item>
     </v-carousel>
+    <v-btn text color="primary" style="margin-top: 10px" @click="refresh"
+      >Voltar ao início</v-btn
+    >
   </v-list-item-content>
 </template>
 
@@ -107,7 +122,7 @@ export default {
   props: ["results", "enable"],
   date: () => {
     return {
-      shortDate: ""
+      shortDate: "",
     };
   },
   async created() {
@@ -115,8 +130,13 @@ export default {
     this.shortDate = today.toLocaleDateString("en-US", {
       weekday: "short",
       hour: "2-digit",
-      minute: "2-digit"
+      minute: "2-digit",
     });
-  }
+  },
+  methods: {
+    refresh: () => {
+      location.reload();
+    },
+  },
 };
 </script>

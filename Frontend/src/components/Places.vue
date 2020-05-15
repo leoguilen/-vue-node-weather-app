@@ -1,7 +1,12 @@
 <template>
   <main style="height:100%">
     <v-container fluid>
-      <v-alert transition="slide-y-reverse-transition" v-show="error !== ''" type="error">{{error}}</v-alert>
+      <v-alert
+        transition="slide-y-reverse-transition"
+        v-show="error !== ''"
+        type="error"
+        >{{ error }}</v-alert
+      >
       <v-row>
         <v-col cols="12">
           <v-row align="center" justify="center">
@@ -10,11 +15,14 @@
                 transition="slide-y-reverse-transition"
                 v-show="alert !== ''"
                 type="warning"
-              >{{alert}}</v-alert>
+                >{{ alert }}</v-alert
+              >
               <v-list-item two-line>
                 <!-- Card central com os inputs-->
                 <v-list-item-content v-show="enableCbox === true">
-                  <v-list-item-title class="headline text-center">Informações Climáticas</v-list-item-title>
+                  <v-list-item-title class="headline text-center"
+                    >Informações Climáticas</v-list-item-title
+                  >
                   <!-- Combo com os estados -->
                   <v-card-text>
                     <v-combobox
@@ -43,15 +51,15 @@
                     <!-- Checklist com os lugares selecionados -->
                     <v-list flat>
                       <v-list-item-group color="primary">
-                        <v-list-item v-for="(item, i) in selectedPlaces" :key="i">
+                        <v-list-item
+                          v-for="(item, i) in selectedPlaces"
+                          :key="i"
+                        >
                           <v-list-item-content>
                             <v-list-item-title>
                               {{ item.state }} -
                               {{ item.city }}
-                              <a
-                                href="#"
-                                @click="removeItem(item)"
-                              >
+                              <a href="#" @click="removeItem(item)">
                                 <img
                                   style="float:right;margin-top:3px"
                                   src="../assets/Icons/close.svg"
@@ -66,14 +74,23 @@
                     <!-- Botão para envio das cidades selecionadas -->
                     <v-divider></v-divider>
                     <v-card-actions style="float:right; margin-right: -4px">
-                      <v-btn small color="primary" @click="sendPlaces(selectedPlaces)">Enviar</v-btn>
+                      <v-btn
+                        small
+                        color="primary"
+                        @click="sendPlaces(selectedPlaces)"
+                        >Enviar</v-btn
+                      >
                     </v-card-actions>
                   </v-card-text>
                 </v-list-item-content>
 
                 <!-- Loader -->
                 <v-list-item-content v-show="loader === true">
-                  <v-img src="../assets/Icons/loader.gif" aspect-ratio="2" contain></v-img>
+                  <v-img
+                    src="../assets/Icons/loader.gif"
+                    aspect-ratio="2"
+                    contain
+                  ></v-img>
                   <p>Carregando, por favor aguarde...</p>
                 </v-list-item-content>
 
@@ -98,7 +115,7 @@ import { isNullOrUndefined } from "util";
 export default {
   name: "Places",
   components: {
-    Results
+    Results,
   },
   data: () => {
     return {
@@ -114,13 +131,13 @@ export default {
       loader: false,
       enableCbox: true,
       results: false,
-      resultsObj: []
+      resultsObj: [],
     };
   },
   async created() {
     try {
       const states = await StateService.getAll();
-      states.forEach(state =>
+      states.forEach((state) =>
         this.states.push({ text: state.stateName, value: state.geoId })
       );
     } catch (error) {
@@ -147,7 +164,7 @@ export default {
 
       try {
         const cities = await CityService.getCitiesByState(state.value);
-        cities.forEach(city =>
+        cities.forEach((city) =>
           this.cities.push({ text: city.cityName, value: city.geoId })
         );
       } catch (error) {
@@ -157,7 +174,7 @@ export default {
     cityInfo: function(cities) {
       this.selectedPlaces.push({
         state: this.stateObj.text,
-        city: cities[cities.length - 1].text
+        city: cities[cities.length - 1].text,
       });
 
       this.alert = "";
@@ -177,7 +194,7 @@ export default {
       this.loader = true;
 
       try {
-        places.forEach(async pl => {
+        places.forEach(async (pl) => {
           const res = await WeatherService.getInfo(pl.city);
           this.resultsObj.push({
             placeName: res.PlaceName,
@@ -188,7 +205,7 @@ export default {
             minTemp: res.MinTemperature,
             maxTemp: res.MaxTemperature,
             pressure: res.Pressure,
-            humidity: res.Humidity
+            humidity: res.Humidity,
           });
         });
       } catch (error) {
@@ -201,7 +218,7 @@ export default {
         this.loader = false;
         this.results = true;
       }, 2000);
-    }
-  }
+    },
+  },
 };
 </script>
